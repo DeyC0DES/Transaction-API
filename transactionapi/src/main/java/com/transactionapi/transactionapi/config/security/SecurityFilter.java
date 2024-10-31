@@ -30,9 +30,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Override
     public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         var token = recoverToken(request);
-        System.out.println("Token: " + token);
         var login = tokenService.validateToken(token);
-        System.out.println("Login: " + login);
 
         if (login != null) {
             AccountModel model = accountService.findByEmail(login).orElseThrow(() -> new RuntimeException("User not found"));
